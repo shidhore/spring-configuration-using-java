@@ -1,5 +1,8 @@
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.ClassPathResource;
 
 import com.ms.springannotationconfigusingxml.repository.AdminRepository;
 import com.ms.springannotationconfigusingxml.repository.AdminRepositoryImpl;
@@ -11,6 +14,7 @@ import com.ms.springannotationconfigusingxml.service.UserService;
 import com.ms.springannotationconfigusingxml.service.UserServiceImpl;
 
 @Configuration
+@PropertySource("app.properties") // to read properties file - you either need this or the getPropertySourcesPlaceholderConfigurer(...) method defined below, but not both.
 public class AppConfig {
 
 	// Bean name must match first argument value in 'appContext.getBean(...);' method invocation.
@@ -36,5 +40,12 @@ public class AppConfig {
 	public AdminRepository getAdminRepository() {
 		return new AdminRepositoryImpl();
 	}
+
+	/*@Bean
+	public static PropertySourcesPlaceholderConfigurer getPropertySourcesPlaceholderConfigurer() {
+		PropertySourcesPlaceholderConfigurer pspc = new PropertySourcesPlaceholderConfigurer();
+		pspc.setLocation(new ClassPathResource("app.properties"));
+		return pspc;
+	}*/
 
 }
